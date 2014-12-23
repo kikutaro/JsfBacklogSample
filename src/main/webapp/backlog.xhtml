@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="frm" prependId="false">
+            <h:outputStylesheet name="grid/grid.css" library="primefaces" />
+            
+            <p:sticky target="tlbHeader" />
+            <p:toolbar id="tlbHeader">
+                <f:facet name="left">
+                    <p:commandButton id="btnHomeMenu" icon="ui-icon-home" />
+                </f:facet>
+                <f:facet name="right">
+                    <p:themeSwitcher effect="fade">
+                        <f:selectItems value="#{backlogBean.listTheme}" />
+                    </p:themeSwitcher>
+                </f:facet>
+            </p:toolbar>
+            
+            <p:overlayPanel for="btnHomeMenu" showEffect="slide" hideEffect="slide" dynamic="true">
+                堀北真希さん写真集　絶賛発売中
+                <h:panelGrid columns="3">
+                    <h:graphicImage id="imgCastella" value="/resources/images/castella.jpg" />
+                    <h:graphicImage id="imgDramatic" value="/resources/images/dramatic.jpg" />
+                    <h:graphicImage id="imgS" value="/resources/images/s.jpg" />
+                </h:panelGrid>
+                <p:tooltip for="imgCastella" showEffect="fade" hideEffect="fade"
+                           value="出版社: ワニブックス ISBN-10: 4847029283 発売日： 2006/3/25" 
+                           trackMouse="true" />
+                <p:tooltip for="imgDramatic" showEffect="fade" hideEffect="fade"
+                           value="出版社: マガジンハウス ISBN-10: 483872604X 発売日： 2013/9/26" 
+                           trackMouse="true" />
+                <p:tooltip for="imgS" showEffect="fade" hideEffect="fade"
+                           value="出版社: マガジンハウス ISBN-10: 4838719159 発売日： 2008/10/10" 
+                           trackMouse="true" />
+            </p:overlayPanel>
+            
+            <div class="ui-grid ui-grid-responsive">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-6">
+                        <p:dataTable var="prj" value="#{backlogBean.listProject}">
+                            <f:facet name="header">
+                                プロジェクト
+                            </f:facet>
+                            <p:column>
+                                <h:outputText value="#{prj}" />
+                            </p:column>
+                            <p:column width="16">
+                                <p:rowToggler />
+                            </p:column>
+                            <p:rowExpansion>
+                                <h:commandLink value="課題の検索" />
+                                <h:commandLink value=" | " />
+                                <h:commandLink value="課題の追加" />
+                            </p:rowExpansion>
+                        </p:dataTable>
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <p:dataScroller var="ticket" value="#{backlogBean.listTicket}"
+                                        chunkSize="10">
+                            <f:facet name="loader">
+                                <p:commandButton type="button" value="View More" />
+                            </f:facet>
+                            <h:graphicImage value="/resources/images/makimaki.jpeg" width="32" />
+                            <h:commandLink value="#{ticket.id}" />
+                            <p:rating value="#{ticket.rating}" />
+                            <h:outputText value="#{ticket.content}" />
+                        </p:dataScroller>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+
